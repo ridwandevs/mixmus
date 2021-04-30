@@ -17,3 +17,20 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['prefix' => 'auth', 'as' => 'auth'], function (){
+
+    Route::post('/signin', ['App\Http\Controllers\Api\Auth\AuthController', 'signInWithEmail'])->name('.signin');
+
+    Route::group(['prefix' => 'register', 'as' => '.register'], function () {
+
+        Route::post('/email', ['App\Http\Controllers\Api\Auth\AuthController', 'registerWithEmail'])->name('.email');
+
+    });
+
+
+
+});
+
+
+Route::post('/test', ['App\Http\Controllers\Api\Test\UploadController', 'upload']);
